@@ -1,0 +1,78 @@
+<h1 @onclick="click">Hello world!</h1>
+<p @onclick="loremIpsum">Lorem ipsum</p>
+<input type="text" @bind-value="html" @oninput="input">
+
+<label for="cbox@id@">
+<input id="cbox@id@" type="checkbox" @bind-value="cbox" />
+    Click  me
+</label>
+
+<select @bind-value="select" @oninput="loremIpsum" name="test" id="asd">
+    <option value="0">None</option>
+    <option value="1">Test</option>
+    <option value="2">Test2</option>
+</select>
+
+<input type="text" @bind-value="radio" @oninput="input2">
+<div @bind-radio="radio">
+    <input type="radio" value="radio1"> Radio 1<br>
+    <input type="radio" value="radio2"> Radio 2<br>
+    <input type="radio" value="radio3"> Radio 3<br>
+</div>
+
+<div @bind-radio="radio2" @show="cbox">
+    <input type="radio" value="radio21"> Radio 21<br>
+    <input type="radio" value="radio22"> Radio 22<br>
+    <input type="radio" value="radio23"> Radio 23<br>
+</div>
+
+<p>Checkbox value: <span @bind-html="cbox"></span></p>
+<span @bind-html="html"></span>
+<label>Radio2 = <span @bind-html="radio2"></span></label>
+<Menu></Menu>
+
+<ul @each="k,v in testList">
+    <li>@v.title - @v.text</li>
+</ul>
+
+<script>
+  code = class {
+
+      cbox = false;
+
+      radio = "radio2";
+
+      radio2 = "radio23";
+
+      select = 1;
+
+      testList = [
+          {
+              title:'Hello Dolly',
+              text : 'Lorem ipsum'
+          },
+          {
+              title:'Hello Ken',
+              text : 'Lorem ipsum2'
+          }
+      ];
+
+      html = 'hello world';
+      click() {
+        this.html = this.parent.parentTest;
+        this.cbox = !this.cbox;
+      }
+
+      input(e) {
+          this.select = e.currentTarget.value;
+      }
+
+      input2(e) {
+          this.radio = e.currentTarget.value;
+      }
+
+      loremIpsum(e) {
+          this.html = e.currentTarget.value;
+      }
+  }
+</script>

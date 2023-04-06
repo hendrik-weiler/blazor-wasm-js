@@ -1,0 +1,55 @@
+@page "/todo"
+
+<Nav></Nav>
+
+<h1>Todo</h1>
+<ul @each="k,val in list">
+    <li>@k - @val.text <a @onclick="delete" data-index="@k" href="javascript:">x</a></li>
+</ul>
+<div @show="listIsEmpty">
+    No entries yet.
+</div>
+
+<p>Fill in todo:</p>
+<input type="text" @bind-value="todo">
+<button @onclick="add">Add</button>
+
+<script>
+    code = class {
+        list = [];
+
+        todo = "";
+
+        listIsEmpty = false;
+
+        onPropertyChanged(name, newValue) {
+            if(name == 'list') {
+                this.listIsEmpty = newValue.length==0;
+            }
+        }
+
+        delete(e) {
+            let index = parseInt(e.currentTarget.dataset.index),
+                i = 0,
+                newlist = [];
+            for(i; i < this.list.length; ++i) {
+                if(i!=index) {
+                    newlist.push(this.list[i]);
+                }
+            }
+
+            this.list = newlist;
+        }
+
+        add(e) {
+            if(this.todo == '') {
+                alert("The text cannot be empty");
+                return;
+            }
+            this.list.push({
+                text : this.todo
+            });
+            this.todo = '';
+        }
+    }
+</script>
